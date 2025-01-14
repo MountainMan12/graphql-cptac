@@ -17,5 +17,5 @@ In order to use this application, we will create use-case specific branches, whi
 
 ## Contact
 
-In case of queries, contact pawan.verma@elucidata.io
+In case of queries, contact pawan12394@gmail.com
 
