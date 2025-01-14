@@ -1,0 +1,564 @@
+type Query {
+  appname: String
+
+  getAllDonors: [GetDonorById!]!
+  getAllExposures: [GetExposureById!]!
+  getAllFamily: [GetFamilyById!]!
+  getAllClinicalHistory: [GetClinicalHistoryById!]!
+  getAllDiagnosis: [GetDiagnosisById!]!
+  getAllPublication: [GetPublicationById!]!
+  getAllDatasets: [GetDatasetById!]!
+
+  donorsCountByCancerSite(cancerSite: String): DonorByCancerSite
+  donorsWithDiabetesCount: DiabetesCount!
+  familyHistoryAnalysis(cancerSite: String): FamilyHistoryAnalysis
+  chemotherapyAdverseEventsAnalysis(selectedRegimen: String!): ChemotherapyAdverseEventsAnalysis
+  diagnosisByEthnicity(ethnicity: String): DiagnosisByEthnicity
+  surgeryAdverseEventsAnalysis(surgeryName: String!): SurgeryAdverseEventsAnalysis
+
+  getDonorById(donor_id: String!): GetDonorById
+  getClinicalHistoryById(donor_id: String!): GetClinicalHistoryById
+  getDiagnosisById(donor_id: String!): GetDiagnosisById
+  getExposureById(donor_id: String!): GetExposureById
+  getFamilyById(donor_id: String!): GetFamilyById
+
+  getDonorsWithCondition(indication: String!): [GetDonorsWithCondition]
+  getDonorsWithExposure(exposureType: String!): [GetDonorsWithExposure]
+
+  ageDistributionOfDiagnosedDonors: [AgeDistributionOfDiagnosedDonors!]!
+  oncologySummary(cancerSite: String!): OncologySummary!
+  ethnicityAndDiseasePrevalence(ethnicity: String!): EthnicityAndDiseasePrevalence
+  cancerSiteAndFamilyHistoryAnalysis(cancerSite: String!): CancerSiteAndFamilyHistoryAnalysis
+  genderBasedExposureAnalysis(gender: String!): GenderBasedExposureAnalysis
+  performanceStatusAndSurvivalAnalysis(disease: String!): PerformanceStatusAndSurvivalAnalysis
+
+  donorDemographics: DonorDemographics
+  diseaseDistributionByGender: [DiseaseDistribution!]!
+  exposureAndLifestyle: ExposureAndLifestyle
+  familyHistoryAndHereditaryFactors: FamilyHistoryAndHereditaryFactorsResult
+  chemotherapyAdverseEventsSummary: ChemotherapyAdverseEventsSummary
+
+  expressionByGeneId(geneSymbol: String!): ExpressionByGeneId
+  expressionByRegimen(regimen: String!): ExpressionByRegimen
+
+  getPublicationById(dataset_id: String!): GetPublicationById
+  getDatasetById(dataset_id: String!): GetDatasetById
+  getSampleById(sample_id: String!): GetSampleById
+
+  getPatientDistribution: [TumorStageDistribution]
+  topNGenesByTumorStage(n: Int!): [TopNGenesByTumorStage!]!
+  getSampleIdsByTumorStage: SampleIdsByTumorStage!
+  getGeneExpressionByTumorStage: [GetGeneExpressionByTumorStage!]!
+  getExpressionCorrelationForGene(assayTypes: [String!]!, geneSymbol: String!): GetExpressionCorrelationForGene
+
+}
+
+type DonorByCancerSite {
+    cancerSite: String!
+    totalDonors: Int!
+    maleDonors: Int!
+    femaleDonors: Int!
+    averageAge: Float
+  }
+
+type DiabetesCount {
+  totalDonors: Int!
+  obeseDonorsCount: Int!
+  overweightDonorsCount: Int!
+  diabetesDonorsCount: Int!
+  prediabetesDonorsCount: Int!
+}
+
+type FamilyHistoryAnalysis {
+  cancerSite: String
+  totalFamilies: Int
+  affectedFamilies: Int
+  averageAgeOfDiagnosis: Int
+  mostCommonRelation: String
+}
+
+type ChemotherapyAdverseEventsAnalysis {
+  selectedRegimen: String!
+  totalCycles: Int
+  averageNumberOfCycles: Int
+  mostCommonAdverseEvent: String
+  mostCommonMedication: String
+}
+
+type DiagnosisByEthnicity {
+  ethnicity: String
+  totalDiagnoses: Int
+  maleDiagnoses: Int
+  femaleDiagnoses: Int
+  averageAgeAtDiagnosis: Float
+}
+
+type SurgeryAdverseEventsAnalysis {
+  surgeryName: String
+  totalSurgeries: Int
+  mostCommonAdverseEvent: String
+  mostCommonMedication: String
+}
+
+type AgeDistributionOfDiagnosedDonors {
+  ageGroup: String!
+  totalDiagnosedDonors: Int!
+}
+
+type OncologySummary {
+  cancerSite: String!
+  totalDiagnosedCases: Int!
+  mostCommonMorphology: String!
+  averageAgeAtDiagnosis: String
+  commonTreatmentRegimens: [Treatment!]!
+}
+
+type EthnicityAndDiseasePrevalence {
+  ethnicity: String
+  totalDonors: Int
+  diseasePrevalence: Float
+  averageAge: Float
+}
+
+type CancerSiteAndFamilyHistoryAnalysis {
+  cancerSite: String
+  totalFamilies: Int
+  affectedFamilies: Int
+  averageAgeOfDiagnosis: Float
+  mostCommonRelation: String
+}
+
+type GenderBasedExposureAnalysis {
+  gender: String
+  totalDonors: Int
+  smokingPercentage: Float
+  drinkingPercentage: Float
+  averageBMI: Float
+}
+
+type PerformanceStatusAndSurvivalAnalysis {
+  disease: String
+  averageDiseaseFreeSurvival: Float
+  averageProgressionFreeSurvival: Float
+  commonRecistCriteria: String
+}
+
+type DonorDemographics {
+  totalDonors: Int
+  averageAge: Float
+  maleDonors: Int
+  femaleDonors: Int
+  averageBMI: Float
+}
+
+type DiseaseDistribution {
+  gender: String!
+  totalCases: Int!
+  commonCancerSites: [String]!
+  averageAgeAtDiagnosis: Float!
+}
+
+type ExposureAndLifestyle {
+  smokingPercentage: Float
+  drinkingPercentage: Float
+  obesityPercentage: Float
+  averagePhysicalActivity: String
+}
+
+type FamilyHistoryAndHereditaryFactorsResult {
+  totalFamilies: Int
+  hereditaryFactors: [String]
+  averageAgeOfDiagnosis: Float
+  mostCommonCancerSite: String
+}
+
+type ChemotherapyAdverseEventsSummary {
+  totalCycles: Int
+  averageNumberOfCycles: Float
+  mostCommonAdverseEvent: String
+  mostCommonMedication: String
+}
+
+type GetDonorById {
+  donor_id: String!
+  patientId: String
+  patientUuid: String
+  bmi: Float
+  preMenopauseCycleType: String
+  preMenopauseCycleDuration: String
+  age: Int
+  gender: String
+  menstruation: String
+  occupation: String
+  ethnicity: String
+  height: Float
+  weight: Float
+  diet: String
+  maritalStatus: String
+  numberOfChildren: Int
+  waistCircumference: Float
+  baselineHba1c: Float
+  baselineFpg: Float
+  race: String
+  ethnicityHispanic: String
+  asianMajority: String
+  diseaseDuration: String
+  indication: String
+  diseaseEntryCriteria: String
+  tnmStage: String
+  tumorGrade: String
+  overweight: String
+  obesityClassI: String
+  obesityClassII: String
+  obesityClassIII: String
+  diabetes: String
+  prediabetes: String
+  dyslipidemia: String
+  hypertension: String
+  depression: String
+  pcos: String
+}
+
+type GetDonorsWithCondition {
+  donor_id: String!
+  patientId: String
+  patientUuid: String
+  age: Int
+  gender: String
+  indication: String
+}
+
+type GetDonorsWithExposure {
+  donor_id: String!
+  patientId: String
+  patientUuid: String
+  age: Int
+  gender: String
+  exposureType: String
+}
+
+type GetExposureById {
+  donor_id: String!
+  smoking: String
+  smokingOnsetYear: Int
+  smokingQuitYear: Int
+  smokingSpecify: String
+  smokingFrequency: String
+  drinking: String
+  drinkingSpecify: String
+  drinkingFrequency: String
+  isBloodThinningMedications: String
+  bloodThinningMedicationSpecify: String
+  otherFormsOfTobaccoUse: String
+  otherFormsOfTobaccoUseSpecify: String
+  backTreatments: String
+  failedTreatments: String
+  treatmentSwitch: String
+  diet: String
+  exercise: String
+}
+
+type GetFamilyById {
+  donor_id: String!
+  patientId: String!
+  herediatries: String
+  patientRelation: String
+  cancerSiteName: String
+  ageOfDiagnosis: Int 
+}
+
+type GetClinicalHistoryById {
+  donor_id: String!
+  patientId: String!
+  ageAtDiagnosis: Int
+  symptomsBeforeDiagnosis: String
+  hereditaryFactor: String
+  hereditaryFactorSignificant: String
+  synchronousOrMetachronous: String
+}
+
+type GetDiagnosisById {
+  donor_id: String!
+  patientId: String!
+  disease: Disease
+  diagnostictests: DiagnosticTests
+}
+
+type Disease {
+  cancerSite: String
+  cancerLocation: String
+  morphology: String
+  laterality: String
+}
+
+type DiagnosticTests {
+  eventtype: EventType
+  eventdate: String
+}
+
+type EventType {
+  treatmenteventtype: TreatmentEventType
+  diagnosticeventtype: DiagnosticEventType 
+  consultation: Consultation 
+}
+
+type TreatmentEventType {
+  chemotherapy: Chemotherapy 
+  performancestatus: PerformanceStatus 
+  surgery: Surgery 
+}
+
+type Chemotherapy {
+  chemotherapydetails: ChemotherapyDetails 
+}
+
+type ChemotherapyDetails {
+  selectedRegimen: String
+  startDate: String
+  numberOfCycles: Int
+  cycles: Cycles
+  routeOfAdministration: String
+  adverseEventList: [String]
+  adverseEventMedication: String
+}
+
+type Cycles {
+  drugdosages: DrugDosages 
+}
+
+type DrugDosages {
+  date: String
+  drugName: String
+  dosage: String
+}
+
+type PerformanceStatus {
+  performancestatusdetails: PerformanceStatusDetails 
+}
+
+type PerformanceStatusDetails {
+  diseaseFreeSurvival: String
+  progressionFreeSurvival: String
+  recistCriteria: String
+  irecistCriteria: String
+}
+
+type Surgery {
+  surgerydetails: SurgeryDetails 
+}
+
+type SurgeryDetails {
+  name: String
+  date: String
+  adverseEventList: [String]
+  adverseEventMedication: String
+}
+
+type DiagnosticEventType {
+  diagnosticdetails: DiagnosticDetails
+}
+
+type DiagnosticDetails {
+  molecularpathology: MolecularPathology 
+  serumbiomarker: SerumBiomarker 
+  pathology: Pathology 
+}
+
+type MolecularPathology {
+  ihc: IHC 
+  fish: FISH 
+  pcr: PCR 
+  selectMethod: String 
+  impression: String
+  dateOfTest: String 
+  approximateDate: String 
+}
+
+type IHC {
+  selectMarker: String 
+  result: String 
+  cellsPositive: Int
+  intensityScore: Float 
+  combinedPositiveScore: Float 
+  tumourProportionScore: Float 
+  allRedScore: Float 
+  cloneOfAntibody: String 
+  jScore: Float 
+  hScore: Float
+}
+
+type FISH {
+  selectMarker: String 
+  result: String 
+  numberOfCopies: Int 
+  ratio: String
+}
+
+type PCR {
+  selectMarker: String 
+  exonTested: String 
+  codonTested: String 
+  result: String 
+}
+
+type SerumBiomarker {
+  date: String 
+  approximateDate: String
+  biomarkers: Biomarkers
+}
+
+type Biomarkers {
+  biomarker: String
+  biomarkerValue: String
+  unit: String
+}
+
+type Pathology {
+  lymphNodeRegions: String 
+  typeOfSample: String 
+  dateOfTest: String
+  grade: String
+  tissue: String
+  margins: String
+  impression: String
+}
+
+type Consultation {
+  comments: String 
+  advise: String 
+  eventdate: String
+}
+
+type GetPublicationById {
+  dataset_id: String!
+  url: String 
+  sourceNumber: Int
+  authors: [String]
+  publicationYear: Int
+  title: String
+  journal: String
+  volume: String
+  pages: Int
+  publicationType: String
+  primarySource: String
+  firstAuthor: String
+  reference: String
+}
+
+type Treatment {
+  regimen: String!
+  totalDonors: Int!
+}
+
+
+type GetDatasetById {
+  dataset_id: String!
+}
+
+type GetSampleById {
+  sample_id: String!
+  patientId: String!
+  type: String
+  preservationMethod: String
+  siteOfResection: String
+  tissueType: String
+}
+
+type ExpressionData {
+  sampleId: String
+  expressionValue: Float
+}
+
+type AssayType {
+  rawCountData: [ExpressionData]
+  normalisedData: [ExpressionData]
+}
+
+type ExpressionByGeneId {
+  assayType: AssayType
+}
+
+type ExpressionByRegimen {
+  assayType(regimen: String!): AssayType!
+}
+
+type AgeGroup {
+  range: String
+  count: Int
+}
+
+type GenderAgeDistribution {
+  gender: String
+  ageGroups: [AgeGroup]
+}
+
+type TumorStageDistribution {
+  tumorStage: String
+  distributions: [GenderAgeDistribution]
+}
+
+
+type SampleData {
+  sampleId: String!
+  expressionValue: Float!
+}
+
+type TopGenes {
+  geneSymbol: String!
+  samples: [SampleData!]!
+  averageExpression: Float!
+}
+
+type TopNGenesByTumorStage {
+  tumorStage: String!
+  topGenes: [TopGenes!]!
+}
+
+type GeneExpressionData {
+  geneSymbol: String!
+  expressionValues: [ExpressionValue]
+}
+
+type ExpressionValue {
+  sampleId: String!
+  expressionValue: Float!
+}
+
+type TumorStageSampleIdPair {
+  tumorStage: String!
+  sampleIds: [String]
+}
+
+type SampleIdsByTumorStage {
+  tumorStage: [TumorStageSampleIdPair]
+}
+
+type TumorStageGeneExpressionPair {
+  tumorStage: String!
+  geneExpression: [GeneExpressionEntry!]!
+}
+
+type GeneExpressionValue {
+  geneSymbol: String!
+  expression_value: Float!
+}
+
+type GeneExpressionEntry {
+  sampleId: String!
+  normalisedData: [GeneExpressionValue!]!
+}
+
+type GetGeneExpressionByTumorStage {
+  tumorStage: [TumorStageGeneExpressionPair!]!
+}
+
+type AssayTypeData {
+  AssayType: String
+  expressionData: [ExpressionData]
+}
+
+type GetExpressionCorrelationForGene {
+  geneSymbol: String
+  correlationValue: Float
+  AssayData: [AssayTypeData]
+}

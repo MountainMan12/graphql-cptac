@@ -1,0 +1,40 @@
+{
+  "name": "graphql-poc",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "graphql application for consumption of biomedical data on Polly",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "db:up": "docker-compose up",
+    "install": "npm ci"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pverma12394/graphql-poc.git"
+  },
+  "keywords": [
+    "graphql",
+    "rnaseq"
+  ],
+  "author": "Pawan Verma",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pverma12394/graphql-poc/issues"
+  },
+  "homepage": "https://github.com/pverma12394/graphql-poc#readme",
+  "dependencies": {
+    "@apollo/server": "^4.10.0",
+    "graphql": "^16.8.1",
+    "node-correlation": "^2.0.0",
+    "pino": "8.17.1",
+    "pino-pretty": "10.3.0",
+    "simple-statistics": "^7.8.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "3.0.2"
+  }
+}
